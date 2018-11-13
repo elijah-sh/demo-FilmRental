@@ -1,0 +1,78 @@
+.ui-pagination-container {
+	height: 34px;
+	line-height: 34px;
+}
+
+.ui-pagination-container .ui-pagination-page-item ,.ui-pagination-container .ui-pagination-page-btn{
+	font-size: 14px;
+	padding: 4px 10px;
+	background: #fff;
+	border: 1px solid #c5b7b7;
+	color: #888;
+	margin: 0 3px;
+	text-decoration: none;
+}
+
+.ui-pagination-container .ui-pagination-page-item:hover {
+	border-color: #568dbd;
+	color: #568dbd;
+	text-decoration: none;
+}
+
+.ui-pagination-container .ui-pagination-page-item.active {
+	background: #30A5DA;
+	border-color: #30A5DA;
+	color: #fff;
+	cursor: default;
+}
+.page{
+	text-align: center;
+	margin: 30px 0;
+}
+/*
+  具体页面设置*/
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: "微软雅黑";
+	background: #eee;
+}
+
+button {
+	display: inline-block;
+	padding: 6px 12px;
+	font-weight: 400;
+	line-height: 1.42857143;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	border-color: #28a4c9;
+	color: #fff;
+	background-color: #5bc0de;
+	margin: 20px 20px 0 0;
+}
+
+.box {
+	width: 900px;
+	margin: 100px auto 0;
+	height: 34px;
+}
+
+.page {
+	width: 700px;
+}
+
+.info {
+	width: 200px;
+	height: 34px;
+	line-height: 34px;
+}
+
+.fl {
+	float: left;
+}

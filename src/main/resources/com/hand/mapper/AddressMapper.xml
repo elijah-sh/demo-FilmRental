@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hand.mapper.AddressMapper">
+  <resultMap id="AddressResultMap" type="com.hand.dto.Address">
+    <id column="address_id" jdbcType="SMALLINT" property="addressId" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="address2" jdbcType="VARCHAR" property="address2" />
+    <result column="district" jdbcType="VARCHAR" property="district" />
+    <result column="city_id" jdbcType="SMALLINT" property="cityId" />
+    <result column="postal_code" jdbcType="VARCHAR" property="postalCode" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="last_update" jdbcType="TIMESTAMP" property="lastUpdate" />
+  </resultMap>
+  <delete id="deleteAddress" parameterType="java.lang.Short">
+    delete from address
+    where address_id = #{addressId,jdbcType=SMALLINT}
+  </delete>
+  <insert id="insertAddress" parameterType="com.hand.dto.Address">
+    insert into address (address_id, address, address2, 
+      district, city_id, postal_code, 
+      phone, last_update)
+    values (#{addressId,jdbcType=SMALLINT}, #{address,jdbcType=VARCHAR}, #{address2,jdbcType=VARCHAR}, 
+      #{district,jdbcType=VARCHAR}, #{cityId,jdbcType=SMALLINT}, #{postalCode,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{lastUpdate,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateAddress" parameterType="com.hand.dto.Address">
+    update address
+    set address = #{address,jdbcType=VARCHAR},
+      address2 = #{address2,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=SMALLINT},
+      postal_code = #{postalCode,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      last_updat.e = #{lastUpdate,jdbcType=TIMESTAMP}
+    where address_id = #{addressId,jdbcType=SMALLINT}
+  </update>
+  <select id="selectAddress" parameterType="java.lang.Short" resultMap="AddressResultMap">
+    select address_id, address, address2, district, city_id, postal_code, phone, last_update
+    from address
+    where address_id = #{addressId,jdbcType=SMALLINT}
+  </select>
+  <select id="selectAllAddress" resultMap="AddressResultMap">
+    select address_id, address, address2, district, city_id, postal_code, phone, last_update
+    from address
+  </select>
+</mapper>

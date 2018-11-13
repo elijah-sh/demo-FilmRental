@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hand.mapper.CustomerMapper">
+  <resultMap id="CustomerResultMap" type="com.hand.dto.Customer">
+    <id column="customer_id" jdbcType="SMALLINT" property="customerId" />
+    <result column="first_name" jdbcType="VARCHAR" property="firstName" />
+    <result column="last_name" jdbcType="VARCHAR" property="lastName" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="address_id" jdbcType="SMALLINT" property="addressId" />
+    <result column="active" jdbcType="BIT" property="active" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="last_update" jdbcType="TIMESTAMP" property="lastUpdate" />
+    <result column="address" jdbcType="VARCHAR" property="address.address" />
+
+  </resultMap>
+
+  <delete id="deleteCustomer" parameterType="java.lang.Short">
+    delete from customer
+    where customer_id = #{customerId,jdbcType=SMALLINT}
+  </delete>
+
+
+  <insert id="insertCustomer" parameterType="com.hand.dto.Customer">
+            insert into customer
+
+            <trim prefix="(" suffix=")" suffixOverrides="," >
+              first_name,
+              last_name,
+              <if test="storeId != null" >
+                store_id,
+              </if>
+              <if test="customerId != null" >
+                customer_id,
+              </if>
+              <if test="email != null" >
+                email,
+              </if>
+              <if test="addressId != null" >
+                address_id,
+              </if>
+              <if test="active != null" >
+                active,
+              </if>
+              <if test="createDate != null" >
+                create_date,
+              </if>
+              <if test="lastUpdate != null" >
+                last_update,
+              </if>
+
+            </trim>
+
+            <trim prefix="values (" suffix=")" suffixOverrides="," >
+              #{firstName,jdbcType=VARCHAR},
+              #{lastName,jdbcType=VARCHAR},
+              <if test="storeId != null" >
+                #{storeId,jdbcType=TINYINT},
+              </if>
+              <if test="customerId != null" >
+                #{customerId,jdbcType=SMALLINT},
+              </if>
+              <if test="email != null" >
+                #{email,jdbcType=VARCHAR},
+              </if>
+              <if test="addressId != null" >
+                #{addressId,jdbcType=SMALLINT},
+              </if>
+              <if test="active != null" >
+                #{active,jdbcType=BIT},
+              </if>
+              <if test="createDate != null" >
+                #{createDate,jdbcType=TIMESTAMP},
+              </if>
+              <if test="lastUpdate != null" >
+                #{lastUpdate,jdbcType=TIMESTAMP},
+              </if>
+            </trim>
+
+  </insert>
+
+
+
+    <update id="updateCustomer" parameterType="com.hand.dto.Customer">
+            update customer
+            <trim prefix="set" suffixOverrides=",">
+              <if test="storeId != null">store_id=#{storeId,jdbcType=TINYINT},</if>
+              <if test="firstName != null">    first_name = #{firstName,jdbcType=VARCHAR},   </if>
+              <if test="lastName != null">   last_name = #{lastName,jdbcType=VARCHAR},   </if>
+              <if test="email != null">email=#{email,jdbcType=VARCHAR},</if>
+              <if test="addressId != null">address_id=#{addressId},</if>
+              <if test="active != null">active=#{active,jdbcType=BIT},</if>
+              <if test="lastUpdate != null">last_update=#{lastUpdate,jdbcType=TIMESTAMP},</if>
+            </trim>
+            where customer_id = #{customerId,jdbcType=SMALLINT}
+  </update>
+
+
+  <select id="selectAllCustomers" parameterType="com.hand.dto.Customer"  resultMap="CustomerResultMap">
+        select customer_id, store_id, first_name, last_name, email, c.address_id, a.address address , active, create_date,
+        c.last_update last_update
+        from customer c ,address a
+        WHERE   c.address_id = a.address_id
+            <if test="firstName != null">
+              AND c.first_name = #{firstName}
+            </if>
+            <if test="lastName != null">
+              AND c.last_name = #{lastName}
+            </if>
+            <if test="customerId != null">
+              AND c.customer_id = #{customerId}
+            </if>
+      ORDER BY customer_id DESC
+
+  </select>
+
+</mapper>

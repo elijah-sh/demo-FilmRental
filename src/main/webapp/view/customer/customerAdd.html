@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>客户管理|创建客户</title>
+  <link rel="stylesheet" href="/static/AdminLTE/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/AdminLTE/bower_components/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="/static/AdminLTE/bower_components/Ionicons/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/static/AdminLTE/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="/static/AdminLTE/dist/css/skins/skin-blue.min.css">
+
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  <!-- 分页 -->
+
+  <link rel="stylesheet" href="/static/plugins/Pagination/css/jquery.pagination.css" />
+  <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+
+
+  <!-- layer-v2.1 -->
+  <script src="/static/plugins/layer-v2.1/layer/layer.js"></script>
+
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <script src="/static/AdminLTE/js/html5shiv.min.js"></script>
+  <script src="/static/AdminLTE/js/respond.min.js"></script>
+  <!-- ./wrapper -->
+  <!-- REQUIRED JS SCRIPTS -->
+  <!-- jQuery 3 -->
+  <script src="/static/AdminLTE/bower_components/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap 3.3.7 -->
+  <script src="/static/AdminLTE/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/static/AdminLTE/dist/js/adminlte.min.js"></script>
+
+  <script src="/static/plugins/jqueryPagination/js/jquery.pagination.min.js"></script>
+  <!-- Google Font -->
+  <!--工具-->
+  <script src="/static/js/util.js"></script>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper"   >
+
+  <div class="starter" ></div>
+  <div class="header" ></div>
+  <div class="sidebar" ></div>
+
+
+  <div class="content-wrapper">
+    <section class="content-header" >
+      <h1>创建客户<small>Create Customer</small></h1>
+
+
+    </section>
+
+    <section class="content container-fluid" >
+
+
+      <div class="col-xs-12">
+
+        <div class="box">
+          <div class="box-header">
+
+            <div class="box-header with-border">
+              <h3 class="box-title">基本信息</h3>
+
+            </div>
+
+            <div class="box-body col-xs-9">
+
+              <div class="form-group">
+                <label  class="col-sm-1 control-label">FirstName</label>
+                <label class="text-red col-sm-1">* </label>
+                <div class="col-sm-10">
+                  <input class="form-control" id="firstName" placeholder="firstName..." type="text">
+                </div>
+              </div>
+              <br/> <br/>
+              <div class="form-group">
+                <label  class="col-sm-1 control-label form-group" > LastName   </label>
+                <label class="text-red col-sm-1">* </label>
+                <div class="col-sm-10">
+                  <input class="form-control" id="lastName" placeholder="lastName..." type="text">
+                </div>
+              </div>
+              <br/> <br/>
+              <div class="form-group">
+                <label  class="col-sm-2 control-label form-group" > Email   </label>
+                <div class="col-sm-10">
+                  <input class="form-control" id="email" placeholder="email..." type="text">
+                </div>
+              </div>
+              <br/> <br/>
+              <div class="form-group">
+                <label  class="col-sm-1 control-label form-group" > address   </label>
+                <label class="text-red col-sm-1">* </label>
+                <div class="col-sm-10">
+                  <select id = "address" class="form-control">
+                  </select>
+                </div>
+              </div>
+
+              <br/> <br/>
+
+              <div class="form-group col-sm-10" align="center" >
+
+                <button type="submit" class="btn btn-info " onclick="addCustomer()">新建</button>
+
+                <button type="submit" class="btn btn-default pull-right" onclick="cancelAdd()">取消</button>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <!-- /.box -->
+      </div>
+
+    </section>
+
+   </div>
+
+
+
+   <div class="footer" ></div>
+
+</div>    <!--最大的div-->
+
+</body>
+
+
+</html>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<script src="/static/js/jquery-3.0.0.min.js"></script>
+
+ <script src="/static/js/customer.js"></script>
+
+<script type="text/javascript">
+    $(function(){
+
+        $('.footer').load('/view/common/footer.html');
+        $('.header').load('/view/common/header.html');
+        $('.sidebar').load('/view/common/sidebar.html');
+
+        resetCustomer();		// 清空表单数据
+        address();  //加载地址
+    });
+
+    function addCustomer() {
+
+        var  firstName = $('#firstName').val();
+        var lastName = $('#lastName').val() ;
+        var address = $('#address').val();
+        var email = $('#email').val();
+        var addressId = $('#address').val();
+        //           firstName  lastName  address   email
+
+        if(  $("#firstName").val() == ""||$("#lastName").val() == "" )
+        {
+            layer.msg("firstName或lastName不能为空",  {icon: 3});
+            return false;
+        }
+        var customerData = "firstName:"+firstName+"&lastName=" +lastName+"&addressId="+address
+
+        if(email != null & email != ""){
+            if(!checkEmail(email)){   	// 邮箱格式验证
+                return false;
+            }
+        }
+
+        if(email!=null||email!=""){
+            customerData =  customerData+  "&email="+email ;
+        }
+
+        //  alert(firstName);
+        $.ajax({
+            url :"/customer/addCustomer.do",
+            type:"POST",
+            data:{firstName:firstName,lastName:lastName,addressId:addressId,email:email},
+          /*	dataType:JSON,*/
+            success : function(data) {
+                if(data.flag==true){
+                    layer.msg("保存完成！", {icon: 1});
+                    window.location.href="/customer/info.do"
+                    initCustomerInfo(1,pageSize,null);
+                } else {
+                    layer.msg('保存失败！', {icon: 5});
+                }
+            },
+            error : function() {
+                layer.msg('添加失败！', {icon: 5});
+            }
+        });    // ajax 结束
+
+    }    //  添加操作 结束
+
+    function cancelAdd() {
+        window.location.href="/customer/info.do"
+    }
+
+</script>
